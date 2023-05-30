@@ -1,0 +1,48 @@
+{% extends "todolist/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% block content %}
+    {% csrf_token %}
+
+    <div class="form-floating mb-3">
+      <input type="text" name="title" class="form-control" id="floatingInput" {{ post.title }}>
+      <label for="floatingInput">{{ post.title }}</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" name="content" class="form-control" id="floatingPassword" placeholder={{ post.content }}>
+      <label for="floatingPassword">{{ post.content }}</label>
+    </div>
+
+    <a href="/" type="submit" class="btn btn-outline-secondary">Submit</a>
+
+
+
+
+
+
+{#    {% csrf_token %}#}
+{#    <form action="/post/{{ post.id }}/edit/" method="POST">#}
+{#        <div>#}
+{#            <label>#}
+{#                Заголовок#}
+{#                <input type="text" name="title" class="form-control" id="note-title" placeholder="Name a note">#}
+{#            </label>#}
+{#        </div>#}
+{##}
+{#        <div>#}
+{#            <label>#}
+{#                Содержимое#}
+{#                <textarea name="content"></textarea>#}
+{#            </label>#}
+{#        </div>#}
+{##}
+{#        <div>#}
+{#        <!--input type="submit" value="Отправить">-->#}
+{#            <input class="btn btn-warning" type="submit" value="Submit">#}
+{#        </div>#}
+{##}
+{#    </form>#}
+
+{% endblock %}
+</html>

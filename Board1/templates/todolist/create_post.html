@@ -1,0 +1,20 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="alert">
+          <label for="note-title" class="form-label">Name a note</label>
+          <input type="text" name="title" class="form-control" id="note-title" placeholder="Name a note">
+        </div>
+        <div class="alert">
+          <label for="note-content" class="form-label">Note content</label>
+          <textarea class="form-control" name="content" id="note-content" rows="3"></textarea>
+        </div>
+
+        <input type="submit" class="d-grid gap-2 col-3 mx-auto" value="Submit">
+
+    </form>
+{% endblock %}
