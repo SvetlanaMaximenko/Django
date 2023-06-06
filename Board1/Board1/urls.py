@@ -22,7 +22,10 @@ from todolist import cls_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', cls_views.CheckUser.as_view(), name="login"),
     path('', cls_views.PostList.as_view(), name="home"),
+    path('discussed/', cls_views.DiscussedPost.as_view(), name='discussed'),
+    path('users/', cls_views.ListUser.as_view(), name="users"),
     path('create_post/', cls_views.CreatePost.as_view(), name='create'),
     path('edit_error_post/', cls_views.CreatePost.as_view(), name='create_error'),
     path('post/', include("todolist.urls"))

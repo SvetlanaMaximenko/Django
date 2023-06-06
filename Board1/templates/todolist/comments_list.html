@@ -1,0 +1,11 @@
+<div class="list-group list-group-numbered">
+    {% for comment in comments %}
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"> {{ comment.username }} </div>
+          {{ comment.content }}
+        </div>
+        <span class="badge bg-primary rounded-pill"> {{ comment.created }} </span>
+      </li>
+    {% endfor %}
+</div>

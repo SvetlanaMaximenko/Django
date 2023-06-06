@@ -20,6 +20,7 @@ from . import views
 from . import cls_views
 
 urlpatterns = [
+
     path('<int:post_id>/show/', cls_views.ShowPost.as_view(), name="show"),
     path('<int:post_id>/delete/', cls_views.DeletePost.as_view(), name="delete"),
     path('<int:post_id>/edit/', cls_views.EditPost.as_view(), name="edit"),

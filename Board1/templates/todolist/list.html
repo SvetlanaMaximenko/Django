@@ -11,16 +11,11 @@
                 <h5 class="card-title"> {{post.title}}  </h5>
                 <h5 class="card-title"> {{ post.user }} </h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary"> {{ post.created }} </h6>
-                <span class="badge bg-primary rounded-pill"> {{ post.comment_count }} </span>
                 <a href="/post/{{ post.id }}/show" class="btn btn-primary" >Show</a>
-                {%  if post.user == request.user %}
-                    <a href="/post/{{ post.id }}/edit" class="btn btn-success">Edit</a>
-                    <a href="/post/{{ post.id }}/delete" class="btn btn-warning">Delete</a>
-                {% endif %}
+                <a href="/post/{{ post.id }}/edit" class="btn btn-success">Edit</a>
+                <a href="/post/{{ post.id }}/delete" class="btn btn-warning">Delete</a>
             </div>
-       </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
-
-</html>

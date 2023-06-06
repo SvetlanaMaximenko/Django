@@ -1,0 +1,17 @@
+{#<form action="{% url 'comment_add' post_id %}">#}
+<form action="#">
+      {% csrf_token %}
+        <div class="mb-3">
+          <label for="username-id" class="form-label">Username</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="username">
+        </div>
+        <div class="mb-3">
+          <label for="username-id" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="comment-id" class="form-label">Comment</label>
+          <textarea class="form-control" id="comment-id" rows="2"></textarea>
+        </div>
+    <button type="submit" class="btn btn-primary" >Add</button>
+</form>
