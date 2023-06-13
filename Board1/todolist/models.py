@@ -1,6 +1,9 @@
 from django.db import models
 
+
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
 
 
 class Post(models.Model):
@@ -8,6 +11,11 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     content = models.TextField(max_length=300)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="posts")
+    tags = models.ManyToManyField(Tag, related_name="posts")
+
+    @property
+    def comments_count(self) -> int:
+        return self.comments.all().count()
 
 
 class Comment(models.Model):

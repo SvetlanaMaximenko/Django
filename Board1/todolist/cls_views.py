@@ -5,7 +5,7 @@ from django.views import View
 from django.db import models
 from django.http import Http404
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Tag
 from user.models import User
 from django.db.models import Count, Max
 from django.contrib.auth.decorators import login_required
@@ -29,6 +29,7 @@ class ListUser(View):
     @staticmethod
     def get_queryset():
         qs = User.objects.annotate(posts_count=Count('posts')).annotate(last_post=Max('posts__created')).order_by('-posts_count', '-last_post')
+
         return qs
 
     def get(self, request):
@@ -79,7 +80,9 @@ class CheckUser(View):
 class CreatePost(View):
 
     def get(self, request):
-        return render(request, "todolist/create_post.html")
+        tags_list = Tag.objects.values_list("name", flat=True)
+        print(tags_list)
+        return render(request, "todolist/create_post.html", {"tags_list": tags_list})
 
     @staticmethod
     def is_valid_title(title: str) -> bool:
