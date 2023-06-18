@@ -1,0 +1,40 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+
+
+
+{#        <div class="alert">#}
+{#          <label for="note-title" class="form-label">Name a note</label>#}
+{#          <input type="text" name="title" class="form-control" id="note-title" placeholder="Name a note">#}
+{#        </div>#}
+{#        <div class="alert">#}
+{#          <label for="note-content" class="form-label">Note content</label>#}
+{#          <textarea class="form-control" name="content" id="note-content" rows="3"></textarea>#}
+{#        </div>#}
+{##}
+{#        <div class="mb-3">#}
+{#            <div>#}
+{#              <select class="form-select" multiple aria-label="multiple select example">#}
+{#              <option selected>Open this select menu</option>#}
+{#                {% for tag in tags_list %}#}
+{#                  <option value="{{ tag }}"> {{ tag }}</option>#}
+{#                {% endfor %}#}
+{#              </select>#}
+{#            </div>#}
+{#        </div>#}
+    {% load crispy_forms_tags %}
+
+    <div class="container w-50">
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form | crispy }}
+
+
+            <input type="submit" class="d-grid gap-2 col-3 mx-auto" value="Submit">
+        </form>
+    </div>
+
+{% endblock %}
