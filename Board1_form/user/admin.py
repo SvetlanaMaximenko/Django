@@ -1,22 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from user.models import User
-from user.forms import ProfileEditForm
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib import admin
 from django.utils.html import format_html
 
 
 @admin.register(User)
 class UserAdmin(DefaultUserAdmin):
-    # form = ProfileEditForm
 
-    list_display = ('username', 'email', 'address', 'phone', 'avatar')
+    list_display = ('username', 'email', 'address', 'phone', 'image_tag')
 
-    @property
     def image_tag(self, obj):
-        return format_html(f'<img src="" width="50" height="50" />')
+        return format_html(f'<img src={ obj.avatar.url } width="50" height="50" />')
 
+    image_tag.shot_description = 'Thumb'
+    image_tag.allow_tags = True
 
 
 

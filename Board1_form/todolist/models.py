@@ -5,6 +5,10 @@ from django.db import models
 class Tag(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f'{self.name}'
+               # f'self.objects.values_list("name", flat=True)
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)

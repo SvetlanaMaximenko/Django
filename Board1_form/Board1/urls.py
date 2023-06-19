@@ -18,14 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Board1 import settings
-from todolist import views
+from user import views
 from todolist import cls_views
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', cls_views.UserLogin.as_view(), name="login"),
-    path('login/registration', cls_views.UserReg.as_view(), name="registration"),
+    path('login/', views.UserLogin.as_view(), name="login"),
+    path('accounts/', include("user.urls")),
+    path('logget_out/', views.LogoutView.as_view(), name="logout"),
+    path('login/registration', views.UserReg.as_view(), name="registration"),
     path('', cls_views.PostList.as_view(), name="home"),
     path('discussed/', cls_views.DiscussedPost.as_view(), name='discussed'),
     path('users/', cls_views.ListUser.as_view(), name="users"),

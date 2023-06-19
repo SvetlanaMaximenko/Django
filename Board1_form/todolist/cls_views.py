@@ -57,60 +57,60 @@ class DiscussedPost(View):
         return render(request, "todolist/list_comments.html", {"posts": posts})
 
 
-class UserLogin(View):
-
-    def get(self, request):
-        return render(request, "registration/login.html", {"form": UserLoginForm()})
-
-    def post(self, request):
-        form = UserLoginForm(request.POST)
-
-        if not form.is_valid():
-            print(form)
-            return render(request, "registration/login.html", {"form": UserLoginForm()})
-        else:
-            username_ = form.cleaned_data["username"]
-            password_ = form.cleaned_data["password"]
-            qs = User.objects.filter(username=username_)
-
-            if not qs:
-                return render(request, "registration/login.html", {"form": UserLoginForm()})
-            else:
-                if not qs.filter(password=password_):
-                    return render(request, "registration/login.html", {"form": UserLoginForm()})
-                else:
-                    return redirect(reverse("home"))
-
-
-class UserReg(View):
-
-    @staticmethod
-    def get_queryset():
-        return User.objects.all()
-
-    def get(self, request):
-        return render(request, "registration/registration.html", {"form": UserRegForm()})
-
-    def post(self, request):
-        form = UserRegForm(request.POST)
-        if not form.is_valid():
-            return render(request, "registration/registration.html", {"form": UserRegForm()})
-        else:
-            with transaction.atomic():
-                username = form.cleaned_data["username"]
-                email = form.cleaned_data["email"]
-                password = form.cleaned_data["password"]
-                user = User(username=username, email=email, password=password)
-                user.save()
-                return redirect(reverse("home"))
-
+# class UserLogin(View):
+#
+#     def get(self, request):
+#         return render(request, "registration/login.html", {"form": UserLoginForm()})
+#
+#     def post(self, request):
+#         form = UserLoginForm(request.POST)
+#
+#         if not form.is_valid():
+#             print(form)
+#             return render(request, "registration/login.html", {"form": UserLoginForm()})
+#         else:
+#             username_ = form.cleaned_data["username"]
+#             password_ = form.cleaned_data["password"]
+#             qs = User.objects.filter(username=username_)
+#
+#             if not qs:
+#                 return render(request, "registration/login.html", {"form": UserLoginForm()})
+#             else:
+#                 if not qs.filter(password=password_):
+#                     return render(request, "registration/login.html", {"form": UserLoginForm()})
+#                 else:
+#                     return redirect(reverse("home"))
+#
+#
+# class UserReg(View):
+#
+#     @staticmethod
+#     def get_queryset():
+#         return User.objects.all()
+#
+#     def get(self, request):
+#         return render(request, "registration/registration.html", {"form": UserRegForm()})
+#
+#     def post(self, request):
+#         form = UserRegForm(request.POST)
+#         if not form.is_valid():
+#             return render(request, "registration/registration.html", {"form": UserRegForm()})
+#         else:
+#             with transaction.atomic():
+#                 username = form.cleaned_data["username"]
+#                 email = form.cleaned_data["email"]
+#                 password = form.cleaned_data["password"]
+#                 user = User(username=username, email=email, password=password)
+#                 user.save()
+#                 return redirect(reverse("home"))
+#
 
 @method_decorator(login_required, name='dispatch')
 class CreatePost(View):
 
     def get(self, request):
-        tags = Tag.objects.values_list("name", flat=True)
-        # print(tags_list)
+        # tags = Tag.objects.values_list("name", flat=True)
+
         return render(request, "todolist/create_post.html", {"form": PostForm()})
 
     def post(self, request):
