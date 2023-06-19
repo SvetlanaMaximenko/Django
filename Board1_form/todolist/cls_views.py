@@ -109,7 +109,7 @@ class UserReg(View):
 class CreatePost(View):
 
     def get(self, request):
-        # tags = Tag.objects.values_list("name", flat=True)
+        tags = Tag.objects.values_list("name", flat=True)
         # print(tags_list)
         return render(request, "todolist/create_post.html", {"form": PostForm()})
 

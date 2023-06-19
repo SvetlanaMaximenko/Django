@@ -10,12 +10,13 @@ from django.utils.html import format_html
 @admin.register(User)
 class UserAdmin(DefaultUserAdmin):
     # form = ProfileEditForm
+
     list_display = ('username', 'email', 'address', 'phone', 'avatar')
 
-
-
+    @property
     def image_tag(self, obj):
-        return format_html('<img src="C:\Project\Board1\Board1\media\user.jpg" width="50" height="50" />'.format(obj.image.url))
+        return format_html(f'<img src="" width="50" height="50" />')
+
 
 
 
