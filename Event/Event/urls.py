@@ -17,10 +17,10 @@ Including another URLconf
 # from xml.etree.ElementInclude import include
 from django.contrib import admin
 from django.urls import path, include
-from Events.views import UserReg, Home, UserList, EventsList, EventsEdit, EventsListMy, register_user
+from Events.views import UserReg, Home, UserList, EventsList, EventEdit, EventsListMy, register_user
 from rest_framework import urls
 from djoser import views
-
+from django.conf import settings
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -49,9 +49,12 @@ urlpatterns = [
     path('api/users', UserList.as_view(), name="list"),
     path('api/events', EventsList.as_view(), name="list_events"),
     path('api/events/my', EventsListMy.as_view()),
-    path('api/event/<int:event_id>', EventsEdit.as_view()),
-    path('api/auth/', include('djoser.urls.authtoken')),
-    path('api/auth/', include("djoser.urls")),
+    path('api/event/<int:event_id>', EventEdit.as_view()),
     path('api/token/', TokenPairView.as_view(), name='token_obtain_pair'),
     path('api/protected/', ProtectedView.as_view(), name='protected'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("__debug__/", include("debug_toolbar.urls")),
+    ]

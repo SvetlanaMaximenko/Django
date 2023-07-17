@@ -53,13 +53,26 @@ class UserList(generics.ListAPIView):
     permission_classes = [IsSuperUser]
 
 
-class EventsEdit(generics.UpdateAPIView):
+class EventEdit(generics.GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated, IsOwnerReadOnly]
     lookup_url_kwarg = "event_id"
     lookup_field = "id"
 
+    # def get_queryset(self, request):
+    #     return Event.objects.get(id=request.data['id'])
+
+    def post(self, request, event_id: int):
+        if request.method == 'POST':
+            event = get_object_or_404(Event, id=event_id)
+            print(event)
+            # user = self.request.user
+            print(self.request.user.username, self.request.user.id)
+
+            event.users.add(self.request.user.id)
+            print(event.users)
+            event.save()
 
 class EventsListMy(generics.ListAPIView):
     serializer_class = EventSerializer
@@ -75,7 +88,7 @@ def register_user(request):
         username = request.data.get('username')
         email = request.data.get('email')
         password = request.data.get('password')
-
+        print(username, password, email)
         if not username or not email or not password:
             return Response({'error': 'Необходимо заполнить все поля.'}, status=status.HTTP_400_BAD_REQUEST)
 
