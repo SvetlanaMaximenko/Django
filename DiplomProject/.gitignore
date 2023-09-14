@@ -1,0 +1,6 @@
+/static/*
+!/static/css
+!/static/img
+!/static/js
+!/static/js
+pg_data

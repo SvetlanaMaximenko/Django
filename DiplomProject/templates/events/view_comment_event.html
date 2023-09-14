@@ -1,0 +1,55 @@
+
+<html lang="en">
+{% for comment in event.comments.all %}
+               <script>
+                   {#alert("Ваш текст здесь");#}
+                   <h3 class="card-text" style="display: flex; justify-content: center; align-items: center;">
+                   {{comment.user.username}}
+                   </h3>
+                   <h3 class="card-text" style="display: flex; justify-content: center; align-items: center;">
+                        {{comment.content}}
+                   </h3>
+               </script>
+
+{% endfor %}
+
+{#{% extends "events/base.html" %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{##}
+{#{% block content %}#}
+{#    {% csrf_token %}#}
+{##}
+{#    <div class="select2-container" style="display: flex; justify-content: center; align-items: center;">#}
+{#        <div class="card-body">#}
+{#            <h1 class="card-title" style="display: flex; justify-content: center; align-items: center;"> {{event.name}} </h1>#}
+{#            <h2 class="card-subtitle mb-3 text-body-secondary" style="display: flex; justify-content: center; align-items: center;"> {{ event.meeting_time }} </h2>#}
+{#            {% for image in event.images.all %}#}
+{#               <img src="{{ image.image.url }}" class="rounded mx-auto d-block" alt=" ">#}
+{#               <p class="card-text"> </p>#}
+{#            {% endfor %}#}
+{##}
+{#            {% for comment in event.comments.all %}#}
+{#               <script>#}
+{#                    alert("Ваш текст здесь");#}
+{#               </script>#}
+{#               <h3 class="card-text" style="display: flex; justify-content: center; align-items: center;">#}
+{#                    {{comment.user.username}}#}
+{#               </h3>#}
+{#               <h3 class="card-text" style="display: flex; justify-content: center; align-items: center;">#}
+{#                    {{comment.content}}#}
+{#               </h3>#}
+{#{% endfor %}#}
+{##}
+{#            <a href="/event/{{ event.id }}/comment" class="btn btn-sm btn-outline-secondary">Comment</a>#}
+{##}
+{##}
+{#            <a href="/" class="btn btn-primary" style="display: flex; justify-content: center; align-items: center; width: 10%; height: auto; ">HOME</a>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{##}
+{#{% endblock %}#}
+
+</html>

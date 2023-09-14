@@ -1,0 +1,21 @@
+{#{% extends "events/base.html" %}#}
+<!DOCTYPE html>
+<html lang="en">
+
+{#{% block content %}#}
+
+ {% load crispy_forms_tags %}
+
+    <div class="container w-50">
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form | crispy }}
+            <input type="submit" class="d-grid gap-2 col-3 mx-auto" value="Submit">
+        </form>
+    </div>
+
+{#{% endblock %}#}
+
+</html>
