@@ -2,15 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+# from pydrive.auth import GoogleAuth
+# from pydrive.drive import GoogleDrive
 # from my_email import send_email_to_all_users
-from django.conf import settings
+# from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DiplomProject.settings')
 
-gauth = GoogleAuth()
+# gauth = GoogleAuth()
 # gauth.LocalWebserverAuth()
-drive = GoogleDrive(gauth)
+# drive = GoogleDrive(gauth)
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
     # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DiplomProject.settings')
     print("Дошла")
     # send_email_to_all_users()
-    print("Дошла 2")
+    print("Дошла !!!!!!!!!!")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -28,8 +28,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-
-
 
 
 if __name__ == '__main__':

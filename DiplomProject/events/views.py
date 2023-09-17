@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 # import transaction as transaction
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import View
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from user.forms import UserRegForm, UserLoginForm
 from user.models import User
 from django.contrib.auth.decorators import login_required
@@ -11,8 +11,8 @@ from django.utils.decorators import method_decorator
 from django.db.models.query import Q, QuerySet
 
 from django.db import transaction
-from events.models import Event, Comment
-from events.forms import CommentForm
+from events.models import Event, Comment, FotoUsers
+from events.forms import CommentForm, FileForm
 
 
 # Create your views here.
@@ -36,6 +36,39 @@ class EventMyList(View):
     def get(self, request):
         events = Event.objects.filter(users=request.user.id)
         return render(request, "events/my_events.html", {"events": events})
+
+    def post(self, request, event_id: int):
+
+        event = Event.objects.get(id=event_id)
+        pass
+
+
+class FotoVisit(View):
+
+    def post(self, request, event_id: int):
+
+        event = Event.objects.get(id=event_id)
+        form = FileForm(request.POST, request.FILES)
+
+        user = request.user
+        events = Event.objects.filter(users=request.user.id)
+        if form.is_valid():
+            with transaction.atomic():
+                file = request.FILES['foto'].name
+                foto = FotoUsers(foto=file, event_id=event.id, user_id=user.id)
+                foto.save()
+
+            # Обработка файла
+                print("Файл ", form)
+                return render("events/my_events.html", {"events": events})
+                    # HttpResponse('Файл успешно загружен на сервер!')
+        return render(request, 'upload.html')
+
+class FotoAlbum(View):
+
+    def get(self, request):
+        fotos = FotoUsers.objects.filter(user_id=request.user.id)
+        return render(request, "events/foto_album.html", {"fotos": fotos})
 
 
 class EventView(View):
@@ -71,14 +104,13 @@ class EventEdit(View):
             event.users.add(self.request.user.id)
             event.save()
         else:
-            print('Вы уже здесь!')
             str = 'вы подписаны на это событие'
             return render(request, "events/edit_event_error.html")
         events = Event.objects.all()
         return render(request, "events/edit_event.html", {"event": event})
 
     def post(self, request, event_id: int):
-        print('!!')
+
         event = Event.objects.get(id=event_id)
 
         return render(request, "events/home.html", {"events": events})

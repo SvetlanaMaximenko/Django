@@ -36,4 +36,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 
-
+class FotoUsers(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='fotos')
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name='fotos')
+    foto = models.ImageField(upload_to='events/media/', null=True, blank=True)

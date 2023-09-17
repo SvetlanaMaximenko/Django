@@ -1,5 +1,5 @@
 from django import forms
-from events.models import Comment
+from events.models import Comment, FotoUsers
 
 
 class CommentForm(forms.ModelForm):
@@ -14,3 +14,8 @@ class CommentForm(forms.ModelForm):
         }
 
 
+class FileForm(forms.ModelForm):
+
+    class Meta:
+        model = FotoUsers
+        fields = ["foto"]

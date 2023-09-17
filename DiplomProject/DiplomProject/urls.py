@@ -30,5 +30,7 @@ urlpatterns = [
     path('accounts/', include("user.urls")),
     path('login/registration', user_views.UserReg.as_view(), name="registration"),
     path('my_events/', views.EventMyList.as_view(), name="my_events"),
+    path('photo_album/', views.FotoAlbum.as_view(), name="album"),
+    path('my_events/<int:event_id>/', views.FotoVisit.as_view(), name="foto_visit"),
     path('event/', include("events.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

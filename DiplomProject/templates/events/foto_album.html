@@ -1,0 +1,41 @@
+{% extends "events/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% block content %}
+    {% csrf_token %}
+
+    <body>
+
+
+    <div class="select2-container" style="display: flex; justify-content: center; align-items: center;">
+        <div class="card-body">
+{#            <h1 class="card-title" style="display: flex; justify-content: center; align-items: center;"> {{event.name}} </h1>#}
+{#            <h2 class="card-subtitle mb-3 text-body-secondary" style="display: flex; justify-content: center; align-items: center;"> {{ event.meeting_time }} </h2>#}
+
+            {% for image in fotos.all %}
+               <img src="{{ foto.image.url }}" class="rounded mx-auto d-block" alt=" ">
+               <p class="card-text"> </p>
+            {% endfor %}
+
+{#            <p class="card-text" style="display: flex; justify-content: center; align-items: center;"> {{ event.description }} </p>#}
+{##}
+{#            {% include 'events/comments_list.html' with comments=event.comments.all %}#}
+{##}
+{#            {% if request.user.is_authenticated %}#}
+{##}
+{#                {% include 'events/comments_form.html' with event_id=event.id %}#}
+{##}
+{#            {% else %}#}
+{#                <a href="/" class="btn btn-primary" style="display: flex; justify-content: center; align-items: center; width: 10%; height: auto; ">HOME</a>#}
+{#            {% endif %}#}
+
+        </div>
+
+    </div>
+
+    </body>
+
+{% endblock %}
+
+</html>

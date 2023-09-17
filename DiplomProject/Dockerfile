@@ -1,4 +1,4 @@
-FROM python:3.11-buster
+FROM python:3.11
 
 ENV PYTHONUNBUFFERED 1
 
@@ -8,6 +8,7 @@ COPY poetry.lock pyproject.toml /app/
 
 RUN pip install --upgrade pip --no-cache-dir && \
     pip install --no-cache-dir poetry && \
-    poetry install --no-interaction --no-ansi
+    pip install django && \
+    poetry install --no-interaction --no-ansi \
 
 COPY . .
