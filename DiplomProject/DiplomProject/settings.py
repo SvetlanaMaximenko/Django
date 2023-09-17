@@ -96,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'events',
         'USER': 'sveta',
-        'PASSWORD': '0310',
+        'PASSWORD': 'sveta',
         'HOST': 'localhost',
     }
 }

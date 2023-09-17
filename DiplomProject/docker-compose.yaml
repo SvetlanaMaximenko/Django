@@ -20,9 +20,12 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: sveta
-      POSTGRES_PASSWORD: 0310
+      POSTGRES_PASSWORD: "sveta"
       POSTGRES_DB: events
       PGDATA: /var/lib/postgresql/data/pgdata
+
+    ports:
+      - "5432:5432"
 
     healthcheck:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
@@ -44,14 +47,14 @@ services:
 
   backend:
     build: .
-    image: events:v1.4
+    image: events:v3.0
     command: /bin/sh /app/backend.sh
 
     environment:
       DJANGO_DEBUG: 0
       DJANGO_SECRET_KEY: 'django-insecure-0b_ad5_p++n0169+3d2v4(nkqd@=iy)ykyvus5g6u_nuqa&s7j'
       PG_USER: sveta
-      PG_PASSWORD: 0310
+      PG_PASSWORD: "sveta"
       PG_NAME: events
       PG_HOST: database-service  # домен (вместо IP)
       PG_PORT: 5432
