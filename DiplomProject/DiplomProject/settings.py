@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'events',
         'USER': 'sveta',
         'PASSWORD': 'sveta',
-        'HOST': 'localhost',
+        'HOST': 'database-service',
     }
 }
 
