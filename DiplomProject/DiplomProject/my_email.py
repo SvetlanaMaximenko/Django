@@ -17,7 +17,7 @@ from django.utils import timezone
 def send_email_to_all_users():
     sender = settings.EMAIL_HOST_USER
     password = settings.EMAIL_HOST_PASSWORD
-    to_email = []
+    to_email = ['sv-maximenko@rambler.ru']
     message = 'Ваше событие состоится завтра'
     users = User.objects.filter(events__meeting_time__lt=timezone.now().date() + timezone.timedelta(days=1))
     for user in users:

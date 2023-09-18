@@ -37,16 +37,27 @@ services:
       - "./pg_data:/var/lib/postgresql/data"
 
 
-  adminer:
-    image: adminer
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - "8080:8080"
+
+  pgadmin:
+    image: dpage/pgadmin4
     restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sv-maximenko@rambler.ru
+      PGADMIN_DEFAULT_PASSWORD: sveta
+
     ports:
-      - "8080:8080"
+      - "443:443"
+      - "80:80"
 
 
   backend:
     build: .
-    image: events:v3.5
+    image: events:v4.1
     command: /bin/sh /app/backend.sh
 
     environment:
@@ -76,39 +87,57 @@ services:
       timeout: 5s
       retries: 5
 
-
-#  celery-woker1: &backend
-#    build: .
-#    image: board:v3.1
-#    command: celery -A board worker -c 2 -l INFO -n worker1
-#
-#    environment:
-#      DJANGO_DEBUG: 0
-#      DJANGO_SECRET_KEY: 03je90h90erh28h18hef8hwsdhfohs0adfjh-sadf7asd7
-#      PG_USER: pguser
-#      PG_PASSWORD: pgpassword
-#      PG_NAME: board
-#      PG_HOST: database-service  # домен (вместо IP)
-#      PG_PORT: 5432
-#      REDIS_HOST: redis
-#      REDIS_PORT: 6379
-#      JWT_SIGNING_KEY: u9yw0e9yr12790341927546129n03491023946190263904
-#
-#    depends_on:
-#      database-service:
-#        condition: service_healthy
-#      redis:
-#        condition: service_healthy
+    ports:
+      - "465:465"
 
 
-#  celery-woker2:
-#    <<: *backend
-#    command: celery -A board worker -c 2 -l INFO -n worker2
-#
-#
-#  celery-beat:
-#    <<: *backend
-#    command: /bin/sh /app/settings/run/celery-beat.sh
+  celery-worker:
+    build: .
+    image: events:v4.1
+    command: celery -A DiplomProject worker -c 2 -l INFO -n worker1
+
+    environment:
+      DJANGO_DEBUG: 0
+      DJANGO_SECRET_KEY: 'django-insecure-0b_ad5_p++n0169+3d2v4(nkqd@=iy)ykyvus5g6u_nuqa&s7j'
+      PG_USER: sveta
+      PG_PASSWORD: 'sveta'
+      PG_NAME: events
+      PG_HOST: database-service  # домен (вместо IP)
+      PG_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SIGNING_KEY: u9yw0e9yr12790341927546129n03491023946190263904
+
+    depends_on:
+      database-service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+
+  celery-beat:
+    build: .
+    image: events:v4.1
+    command: /bin/sh /app/celery-beat.sh
+
+    environment:
+      DJANGO_DEBUG: 0
+      DJANGO_SECRET_KEY: 'django-insecure-0b_ad5_p++n0169+3d2v4(nkqd@=iy)ykyvus5g6u_nuqa&s7j'
+      PG_USER: sveta
+      PG_PASSWORD: 'sveta'
+      PG_NAME: events
+      PG_HOST: database-service  # домен (вместо IP)
+      PG_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SIGNING_KEY: u9yw0e9yr12790341927546129n03491023946190263904
+
+    depends_on:
+      database-service:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
 
 
 #  backend1:

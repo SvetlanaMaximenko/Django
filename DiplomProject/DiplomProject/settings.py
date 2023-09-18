@@ -170,10 +170,12 @@ EMAIL_HOST_USER = "maksimenkasp@yandex.ru"
 DEFAULT_FROM_EMAIL = "M@ksimenka"
 EMAIL_HOST_PASSWORD = "yowjajfcjrcwtpvo"
 
-CELERY_BROKER_URL = "redis://"
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+# CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_TASK_TRACK_STARTED = True
 
 CELERY_BEAT_SCHEDULE = {
-    "email": {"task": "DiplomProject.tasks.some_func", "schedule": crontab(hour=6, minute=0)}
+    "email": {"task": "DiplomProject.tasks.some_func", "schedule": crontab(minute='*/1')}
+    # "email": {"task": "DiplomProject.tasks.some_func", "schedule": crontab(hour=6, minute=0)}
 }

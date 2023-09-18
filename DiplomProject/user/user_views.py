@@ -4,6 +4,7 @@ from user.forms import UserRegForm, UserLoginForm, ProfileEditForm
 from user.models import User
 from django.db import transaction
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 
 
@@ -37,19 +38,21 @@ class UserReg(View):
     def post(self, request):
         form = UserRegForm(request.POST)
         if not form.is_valid():
+            print('Плохой ')
             return render(request, "registration/registration.html", {"form": UserRegForm()})
         else:
-            with transaction.atomic():
-                username = form.cleaned_data["username"]
-                email = form.cleaned_data["email"]
-                password = form.cleaned_data["password"]
-                user = User(username=username, email=email, password=password)
-                user.save()
-                return redirect(reverse("login"))
+            # with transaction.atomic():
+            #     username = form.cleaned_data["username"]
+            #     email = form.cleaned_data["email"]
+            #     password = form.cleaned_data["password"]
+            #     user = User(username=username, email=email, password=password)
+            #     user.save()
+            form.save()
+            return redirect(reverse("login"))
 
 
 class UserLogout(LogoutView):
-    pass
+    success_url = reverse_lazy('home')
 
 
 class UserLogin(LoginView):
@@ -57,3 +60,15 @@ class UserLogin(LoginView):
 
     def get_success_url(self):
         return self.success_url
+
+    # def post(self, request):
+    #     form = UserLoginForm(request.POST)
+    #
+    #     if not form.is_valid():
+    #         return render(request, "login")
+    #     else:
+    #         username = form.cleaned_data.get('username')
+    #         password = form.cleaned_data.get('password')
+    #         user = authenticate(request=request, username=username, password=password)
+    #         if user is not None:
+    #             return redirect('home')

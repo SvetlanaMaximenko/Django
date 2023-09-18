@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django import forms
 from user.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 class UserLoginForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class UserLoginForm(forms.ModelForm):
                   }
 
 
-class UserRegForm(forms.ModelForm):
+class UserRegForm(UserCreationForm):
     # password = forms.CharField(label='Password', widget=forms.PasswordInput)
     # password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
 
