@@ -96,11 +96,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'events',
         'USER': 'sveta',
-        'PASSWORD': 'sveta',
-        'HOST': 'database-service',
+        'PASSWORD': '0310',
+        'HOST': 'localhost',
     }
 }
 
+#'HOST': 'database-service',
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -143,10 +144,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # https://drive.google.com/drive/folders/13IPAqJFnsueuuRbWWwhluy53xbffJc_l
 # MEDIA_URL = 'https://drive.google.com/drive/folders/13IPAqJFnsueuuRbWWwhluy53xbffJc_l/'
 # MEDIA_ROOT = BASE_DIR / 'https://drive.google.com/drive/folders/13IPAqJFnsueuuRbWWwhluy53xbffJc_l/'
-MEDIA_URL = 'C:/Project/DiplomProject/events/media/'
-# MEDIA_URL = ''
-# MEDIA_ROOT = BASE_DIR / ' '
-MEDIA_ROOT = BASE_DIR / 'C:\Project\DiplomProject\events\media'
+
+MEDIA_URL = 'C:/Project/Django/DiplomProject/events/media/'
+# MEDIA_URL = '/var/www/media/'
+# MEDIA_ROOT = BASE_DIR / 'var\www\media'
+MEDIA_ROOT = BASE_DIR / 'C:\Project\Django\DiplomProject\events\media'
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -172,7 +175,6 @@ EMAIL_HOST_PASSWORD = "yowjajfcjrcwtpvo"
 
 CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "redis://redis:6379/1"
-# CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_TASK_TRACK_STARTED = True
 
 CELERY_BEAT_SCHEDULE = {

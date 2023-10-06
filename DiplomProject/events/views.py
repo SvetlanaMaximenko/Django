@@ -38,9 +38,8 @@ class EventMyList(View):
         return render(request, "events/my_events.html", {"events": events})
 
     def post(self, request, event_id: int):
-
         event = Event.objects.get(id=event_id)
-        pass
+
 
 
 class FotoVisit(View):
@@ -48,26 +47,25 @@ class FotoVisit(View):
     def post(self, request, event_id: int):
 
         event = Event.objects.get(id=event_id)
-        form = FileForm(request.POST, request.FILES)
-
+        form = FileForm(request.POST or None, request.FILES or None)
         user = request.user
         events = Event.objects.filter(users=request.user.id)
         if form.is_valid():
             with transaction.atomic():
+                foto = form.save(commit=False)
                 file = request.FILES['foto'].name
-                foto = FotoUsers(foto=file, event_id=event.id, user_id=user.id)
+                foto.event_id = event.id
+                foto.user_id = user.id
                 foto.save()
-
-            # Обработка файла
-                print("Файл ", form)
-                return render("events/my_events.html", {"events": events})
-                    # HttpResponse('Файл успешно загружен на сервер!')
+                return render(request, "events/my_events.html", {"events": events})
         return render(request, 'upload.html')
+
 
 class FotoAlbum(View):
 
     def get(self, request):
         fotos = FotoUsers.objects.filter(user_id=request.user.id)
+        print(fotos.all().count())
         return render(request, "events/foto_album.html", {"fotos": fotos})
 
 

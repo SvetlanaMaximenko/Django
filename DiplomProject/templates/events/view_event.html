@@ -7,7 +7,6 @@
 
     <body>
 
-
     <div class="select2-container" style="display: flex; justify-content: center; align-items: center;">
         <div class="card-body">
             <h1 class="card-title" style="display: flex; justify-content: center; align-items: center;"> {{event.name}} </h1>
@@ -16,6 +15,7 @@
             {% for image in event.images.all %}
                <img src="{{ image.image.url }}" class="rounded mx-auto d-block" alt=" ">
                <p class="card-text"> </p>
+
             {% endfor %}
 
             <p class="card-text" style="display: flex; justify-content: center; align-items: center;"> {{ event.description }} </p>

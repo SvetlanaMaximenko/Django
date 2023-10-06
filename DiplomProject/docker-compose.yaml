@@ -15,6 +15,7 @@ services:
     depends_on:
       - backend
 
+
   database-service:
     image: postgres
     environment:
@@ -37,12 +38,6 @@ services:
       - "./pg_data:/var/lib/postgresql/data"
 
 
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#      - "8080:8080"
-
   pgadmin:
     image: dpage/pgadmin4
     restart: always
@@ -57,7 +52,7 @@ services:
 
   backend:
     build: .
-    image: events:v4.1
+    image: events:v6.0
     command: /bin/sh /app/backend.sh
 
     environment:
@@ -93,8 +88,8 @@ services:
 
   celery-worker:
     build: .
-    image: events:v4.1
-    command: celery -A DiplomProject worker -c 2 -l INFO -n worker1
+    image: events:v6.0
+    command: celery -A DiplomProject worker -B -l INFO
 
     environment:
       DJANGO_DEBUG: 0
@@ -117,7 +112,7 @@ services:
 
   celery-beat:
     build: .
-    image: events:v4.1
+    image: events:v6.0
     command: /bin/sh /app/celery-beat.sh
 
     environment:
@@ -140,11 +135,3 @@ services:
 
 
 
-#  backend1:
-#    <<: *backend
-#    command: /bin/sh /app/settings/run/backend.sh
-#
-#
-#  backend2:
-#    <<: *backend
-#    command: /bin/sh /app/settings/run/backend.sh

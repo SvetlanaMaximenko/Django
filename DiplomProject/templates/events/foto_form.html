@@ -1,13 +1,8 @@
 
 <form action="{% url 'foto_visit' event_id %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-
-        <p>Выберите файл для загрузки:</p>
-
-        <input type="file" required name="foto" id="foto-id">
-
-        <br><br>
-
-        <input type="submit" value="Загрузить">
-
+      <p>Выберите файл для загрузки:</p>
+      <input type="file" required name="foto" id="foto-id">
+      <br><br>
+      <input type="submit" value="Загрузить">
 </form>

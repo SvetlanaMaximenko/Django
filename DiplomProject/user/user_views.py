@@ -2,10 +2,20 @@ from django.shortcuts import render, redirect, reverse
 from django.views import View
 from user.forms import UserRegForm, UserLoginForm, ProfileEditForm
 from user.models import User
+from events.models import Event
 from django.db import transaction
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth import login, logout
+
+
+class DataMixin:
+    def get_user_context(self, **kwargs):
+        context = kwargs
+        # Ваш код здесь
+        return context
 
 
 class Profile(View):
@@ -37,18 +47,16 @@ class UserReg(View):
 
     def post(self, request):
         form = UserRegForm(request.POST)
-        if not form.is_valid():
-            print('Плохой ')
-            return render(request, "registration/registration.html", {"form": UserRegForm()})
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            User.objects.create_user(username=username, email=email, password=password)
+            events = Event.objects.all()
+            return render(request, "events/home.html", {"events": events})
         else:
-            # with transaction.atomic():
-            #     username = form.cleaned_data["username"]
-            #     email = form.cleaned_data["email"]
-            #     password = form.cleaned_data["password"]
-            #     user = User(username=username, email=email, password=password)
-            #     user.save()
-            form.save()
-            return redirect(reverse("login"))
+            # messages.error(request, 'Ошибка валидации формы')
+            return render(request, "registration/registration.html", {"form": UserRegForm()})
 
 
 class UserLogout(LogoutView):
@@ -62,13 +70,22 @@ class UserLogin(LoginView):
         return self.success_url
 
     # def post(self, request):
-    #     form = UserLoginForm(request.POST)
-    #
-    #     if not form.is_valid():
-    #         return render(request, "login")
+    #     form = UserLoginForm(data=request.POST)
+    #     print('22222')
+    #     if form.is_valid():
+    #         print('1111111111111')
+    #         user = form.get_user()
+    #         login(request, user)
+    #         messages.success(request, 'You have successfully logged in.')
+    #         return redirect('home')
     #     else:
-    #         username = form.cleaned_data.get('username')
-    #         password = form.cleaned_data.get('password')
-    #         user = authenticate(request=request, username=username, password=password)
-    #         if user is not None:
-    #             return redirect('home')
+    #         messages.error(request, 'Invalid username or password.')
+        # if not form.is_valid():
+        #     return render(request, "login")
+        # else:
+        #     username = form.cleaned_data.get('username')
+        #     password = form.cleaned_data.get('password')
+        #     user = User(username=username, password=password)
+        #     users = User.objects.all()
+        #     if user in users:
+        #         return redirect('home')

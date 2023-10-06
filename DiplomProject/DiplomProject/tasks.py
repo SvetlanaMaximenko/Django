@@ -4,8 +4,9 @@ from celery import app
 from my_email import send_email_to_all_users
 
 
-@app.task(bind=True)
-def some_func(self: Task):
+@app.task
+def some_func():
+    print('Input to task')
     send_email_to_all_users()
 
 
